@@ -71,8 +71,9 @@ html {
 }
 
 .column {
-    border: 1px solid red;
+    background-color: #000;
     flex: 1;
+    opacity: 0;
 }
 
 .configurations {
