@@ -2,6 +2,9 @@
 const DEFAULT_GRID_SIZE = 16;
 const DEFAULT_USER_COLOR = "000000";
 
+const pencilTool = document.querySelector('.pencil');
+const eraserTool = document.querySelector('.eraser');
+
 let currentTool = 'pencil';
 let userColor = "";
 let userGridSize = 16;
@@ -27,14 +30,17 @@ function addEventListenerToGrid() {
     const grids = Array.from(document.querySelectorAll('.column'));
     for (let i = 0; i < grids.length; i++) {
         grids[i].addEventListener('mouseover', (evt) => {
-            if (currentTool === 'eraser') return;
-    
             const currentElement = evt.target;
-    
             let currentOpacity = Number(currentElement.getAttribute('data-opacity'));
-            const incrementOpacity = currentOpacity <= 1 ? currentOpacity += 0.1 : currentOpacity;
-            currentElement.style.opacity = `${incrementOpacity}`;
-            currentElement.setAttribute('data-opacity', incrementOpacity);
+            if (currentTool === 'pencil') {
+                const incrementOpacity = currentOpacity <= 1 ? currentOpacity += 0.1 : currentOpacity;
+                currentElement.style.opacity = `${incrementOpacity}`;
+                currentElement.setAttribute('data-opacity', incrementOpacity);
+            } else if (currentTool === 'eraser') {
+                const decrementOpacity = currentOpacity > 0 ? currentOpacity -= 0.1 : currentOpacity;
+                currentElement.style.opacity = `${decrementOpacity}`;
+                currentElement.setAttribute('data-opacity', decrementOpacity);
+            }
         })
     }
 }
@@ -64,10 +70,27 @@ function handleBoardReset() {
     }
 }
 
-// next: eraser tool, event listeners to select them with keyboards OR clicking their
-// respective icon, toggle rainbow vs. regular (the color selector)
-// clicking the color selector changes it to rainbow and vice versa
+window.addEventListener('keydown', (evt) => {
+    if (evt.key === 'd') {
+        currentTool = 'pencil';
+        // not scalable (what if you added more tools?)
+        pencilTool.style.backgroundColor = '#696969';
+        eraserTool.style.backgroundColor = '#474747';
+    } else if (evt.key = 'e') {
+        currentTool = 'eraser';
+        eraserTool.style.backgroundColor = '#696969';
+        pencilTool.style.backgroundColor = '#474747';
+    }
+});
 
-// select eraser event listener here
+pencilTool.addEventListener('click', () => {
+    currentTool = 'pencil';
+    pencilTool.style.backgroundColor = '#696969';
+    eraserTool.style.backgroundColor = '#474747';
+});
 
-// select pencil event listener here
+eraserTool.addEventListener('click', () => {
+    currentTool = 'eraser';
+    eraserTool.style.backgroundColor = '#696969';
+    pencilTool.style.backgroundColor = '#474747';
+});
