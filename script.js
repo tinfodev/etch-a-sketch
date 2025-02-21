@@ -1,4 +1,3 @@
-// global variables here 
 const DEFAULT_GRID_SIZE = 16;
 const DEFAULT_USER_COLOR = "000000";
 
@@ -62,7 +61,7 @@ function removeGrid(gridSize = userGridSize) {
 }
 
 function handleBoardReset() {
-    userGridSize = prompt("Select a grid size between 1-100:", 16);
+    userGridSize = prompt("Select a grid size between 1-100. Note this will reset the board:", 16);
     if (userGridSize >= 1 && userGridSize <= 100) {
         removeGrid(userGridSize);
     } else {
@@ -73,7 +72,6 @@ function handleBoardReset() {
 window.addEventListener('keydown', (evt) => {
     if (evt.key === 'd') {
         currentTool = 'pencil';
-        // not scalable (what if you added more tools?)
         pencilTool.style.backgroundColor = '#696969';
         eraserTool.style.backgroundColor = '#474747';
     } else if (evt.key = 'e') {
